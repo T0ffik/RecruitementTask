@@ -25,16 +25,16 @@ export const Filter = () => {
       <Button
         variant="contained"
         sx={{ marginLeft: "20px" }}
-        onClick={() => console.log("found!")}
+        onClick={() => productsActor.send({ type: "Filter", id: value })}
       >
         Find product
       </Button>
-      <Button
+      {/* <Button
         variant="contained"
         onClick={() => productsActor.send({ type: "Load" })}
       >
         Load
-      </Button>
+      </Button> */}
     </div>
   );
 };

@@ -15,6 +15,7 @@ export const ProductsTable = () => {
   if (products.length <= 0) {
     return null;
   }
+  console.log("products", products);
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
@@ -26,21 +27,24 @@ export const ProductsTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {products.map((product) => (
-            <TableRow
-              key={product.id}
-              sx={{
-                "&:last-child td, &:last-child th": { border: 0 },
-                backgroundColor: product.color,
-              }}
-            >
-              <TableCell component="th" scope="row">
-                {product.id}
-              </TableCell>
-              <TableCell>{product.name}</TableCell>
-              <TableCell>{product.year}</TableCell>
-            </TableRow>
-          ))}
+          {products.map((product) => {
+            console.log(123, product);
+            return (
+              <TableRow
+                key={product.id}
+                sx={{
+                  "&:last-child td, &:last-child th": { border: 0 },
+                  backgroundColor: product.color,
+                }}
+              >
+                <TableCell component="th" scope="row">
+                  {product.id}
+                </TableCell>
+                <TableCell>{product.name}</TableCell>
+                <TableCell>{product.year}</TableCell>
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </TableContainer>
