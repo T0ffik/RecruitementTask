@@ -1,14 +1,13 @@
 import { Button } from "@mui/material";
 import { useSelector } from "@xstate/react";
 import { productsActor } from "../../xstate/productsActor";
+import { ProductsTable } from "../../components/Table";
 
 export const Home = () => {
   const state = useSelector(productsActor, (state) => state);
   return (
     <div>
       {JSON.stringify(state.value)}
-      {JSON.stringify(state.context.data)}
-      {JSON.stringify(state.context.errorMessage)}
       <Button variant="contained" onClick={() => console.log("Hello to you!")}>
         Hello world!
       </Button>
@@ -18,6 +17,7 @@ export const Home = () => {
       >
         Load
       </Button>
+      <ProductsTable />
     </div>
   );
 };
