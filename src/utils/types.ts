@@ -30,3 +30,8 @@ export type ProductsState = {
   errorMessage: string | undefined;
   id: number | undefined;
 };
+
+export type ModalsState = {
+  isOpen: boolean;
+  data?: TProduct;
+};

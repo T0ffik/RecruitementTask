@@ -1,6 +1,6 @@
 import { Pagination, PaginationItem } from "@mui/material";
 import { useSelector } from "@xstate/react";
-import { productsActor } from "../../xstate/productsActor";
+import { productsActor } from "../../xstate/products/productsActor";
 
 export const CustomPagination = () => {
   const state = useSelector(productsActor, (state) => state.context);

@@ -8,7 +8,8 @@ import {
   Paper,
 } from "@mui/material";
 import { useSelector } from "@xstate/react";
-import { productsActor } from "../../xstate/productsActor";
+import { productsActor } from "../../xstate/products/productsActor";
+import { modalsActor } from "../../xstate/modals/modalsActor";
 
 export const ProductsTable = () => {
   const products = useSelector(productsActor, (state) => state.context.data);
@@ -29,10 +30,14 @@ export const ProductsTable = () => {
           {products.map((product) => {
             return (
               <TableRow
+                onClick={() =>
+                  modalsActor.send({ type: "openModal", data: product })
+                }
                 key={product.id}
                 sx={{
                   "&:last-child td, &:last-child th": { border: 0 },
                   backgroundColor: product.color,
+                  cursor: "pointer",
                 }}
               >
                 <TableCell component="th" scope="row">

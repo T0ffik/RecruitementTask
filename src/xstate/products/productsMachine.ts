@@ -1,6 +1,6 @@
 import { assign, fromPromise, setup } from "xstate";
-import { ProductsState, TApiResponse } from "./types";
-import { fetchData } from "../api/fetchData";
+import { ProductsState, TApiResponse } from "../../utils/types";
+import { fetchData } from "../../api/fetchData";
 
 export const productsMachine = setup({
   types: {

@@ -3,7 +3,7 @@ import "./styles.scss";
 import { Unstable_NumberInput as BaseNumberInput } from "@mui/base/Unstable_NumberInput";
 import { useState } from "react";
 import { Button } from "@mui/material";
-import { productsActor } from "../../xstate/productsActor";
+import { productsActor } from "../../xstate/products/productsActor";
 
 export const Filter = () => {
   const [value, setValue] = useState<number>();
@@ -29,12 +29,6 @@ export const Filter = () => {
       >
         Find product
       </Button>
-      {/* <Button
-        variant="contained"
-        onClick={() => productsActor.send({ type: "Load" })}
-      >
-        Load
-      </Button> */}
     </div>
   );
 };
