@@ -5,25 +5,29 @@ import { fetchData } from "../api/fetchData";
 export const productsMachine = setup({
   types: {
     context: {} as ProductsState,
+    events: {} as
+      | { type: "ChangePage"; page: number }
+      | { type: "Filter"; id?: number },
   },
   actors: {
-    fetchData: fromPromise(async () => {
-      const data = await fetchData();
-
-      return data as TApiResponse;
+    fetchData: fromPromise(async ({ input }) => {
+      const data = await fetchData(input?.id, input?.page);
+      let results: TApiResponse;
+      if (Array.isArray(data.data)) {
+        results = data;
+      } else {
+        results = { ...data, data: [data.data] };
+      }
+      return results;
     }),
   },
   actions: {
-    assignDataToState: (context) => {
-      alert(JSON.stringify(context.event));
-    },
-    throwError: (context) => {
-      alert(JSON.stringify(context.event));
-    },
+    assignId: assign({ id: (e) => e.event.id }),
+    assignPage: (e) => console.log(e),
   },
 }).createMachine({
   id: "Products",
-  initial: "noProducts",
+  initial: "loadingProducts",
   context: {
     page: 1,
     per_page: undefined,
@@ -35,17 +39,11 @@ export const productsMachine = setup({
     id: undefined,
   },
   states: {
-    noProducts: {
-      on: {
-        Load: {
-          target: "loadingProducts",
-        },
-      },
-    },
     loadingProducts: {
       invoke: {
         id: "loadProducts",
         src: "fetchData",
+        input: ({ context: { id, page } }) => ({ id, page }),
         onDone: {
           target: "fetchedProducts",
           actions: assign(({ event }) => event.output),
@@ -58,7 +56,29 @@ export const productsMachine = setup({
         },
       },
     },
-    fetchedProducts: {},
-    error: {},
+    fetchedProducts: {
+      on: {
+        Filter: {
+          target: "loadingProducts",
+          actions: "assignId",
+        },
+        ChangePage: {
+          target: "loadingProducts",
+          actions: "assignPage",
+        },
+      },
+    },
+    error: {
+      on: {
+        Filter: {
+          target: "loadingProducts",
+          actions: "assignId",
+        },
+        ChangePage: {
+          target: "loadingProducts",
+          actions: "assignPage",
+        },
+      },
+    },
   },
 });
