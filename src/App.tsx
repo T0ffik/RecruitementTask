@@ -1,12 +1,8 @@
-import { Button } from "@mui/material";
 import "./App.css";
+import { Home } from "./pages/home/Home";
 
 function App() {
-  return (
-    <Button variant="contained" onClick={() => console.log("Hello to you!")}>
-      Hello world!
-    </Button>
-  );
+  return <Home />;
 }
 
 export default App;
