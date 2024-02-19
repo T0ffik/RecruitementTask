@@ -7,6 +7,8 @@ export const Home = () => {
   return (
     <div>
       {JSON.stringify(state.value)}
+      {JSON.stringify(state.context.data)}
+      {JSON.stringify(state.context.errorMessage)}
       <Button variant="contained" onClick={() => console.log("Hello to you!")}>
         Hello world!
       </Button>

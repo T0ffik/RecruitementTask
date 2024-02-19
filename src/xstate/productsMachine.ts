@@ -1,5 +1,5 @@
-import { fromPromise, setup } from "xstate";
-import { ProductsState } from "./types";
+import { assign, fromPromise, setup } from "xstate";
+import { ProductsState, TApiResponse } from "./types";
 import { fetchData } from "../api/fetchData";
 
 export const productsMachine = setup({
@@ -10,7 +10,7 @@ export const productsMachine = setup({
     fetchData: fromPromise(async () => {
       const data = await fetchData();
 
-      return data;
+      return data as TApiResponse;
     }),
   },
   actions: {
@@ -48,9 +48,13 @@ export const productsMachine = setup({
         src: "fetchData",
         onDone: {
           target: "fetchedProducts",
+          actions: assign(({ event }) => event.output),
         },
         onError: {
           target: "error",
+          actions: assign({
+            errorMessage: ({ event }) => event.error as string,
+          }),
         },
       },
     },
