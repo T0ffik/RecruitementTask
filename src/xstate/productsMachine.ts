@@ -23,7 +23,7 @@ export const productsMachine = setup({
   },
   actions: {
     assignId: assign({ id: (e) => e.event.id }),
-    assignPage: (e) => console.log(e),
+    assignPage: assign({ page: (e) => e.event.page }),
   },
 }).createMachine({
   id: "Products",
@@ -46,7 +46,7 @@ export const productsMachine = setup({
         input: ({ context: { id, page } }) => ({ id, page }),
         onDone: {
           target: "fetchedProducts",
-          actions: assign(({ event }) => event.output),
+          actions: assign(({ event }) => ({ ...event.output, id: undefined })),
         },
         onError: {
           target: "error",

@@ -15,7 +15,6 @@ export const ProductsTable = () => {
   if (products.length <= 0) {
     return null;
   }
-  console.log("products", products);
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
@@ -28,7 +27,6 @@ export const ProductsTable = () => {
         </TableHead>
         <TableBody>
           {products.map((product) => {
-            console.log(123, product);
             return (
               <TableRow
                 key={product.id}
