@@ -4,8 +4,10 @@ import { id, page } from "./consts";
 export const fetchFromParams = () => {
   const param = window.location.search.split("=");
   if (param[0].includes(page)) {
-    productsActor.send({ type: "ChangePage", page: Number(param[1]) });
+    productsActor.send({ type: "GetProductsByPage", page: Number(param[1]) });
   } else if (param[0].includes(id)) {
-    productsActor.send({ type: "Filter", id: Number(param[1]) });
+    productsActor.send({ type: "GetProductById", id: Number(param[1]) });
+  } else {
+    productsActor.send({ type: "GetProducts" });
   }
 };

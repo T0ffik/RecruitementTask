@@ -1,4 +1,4 @@
-import { assign, setup } from "xstate";
+import { assertEvent, assign, setup } from "xstate";
 import { ModalsState, TProduct } from "../../types/types";
 
 export const modalsMachine = setup({
@@ -9,7 +9,13 @@ export const modalsMachine = setup({
       | { type: "closeModal" },
   },
   actions: {
-    openModal: assign({ isOpen: true, data: (e) => e.event.data }),
+    openModal: assign({
+      isOpen: true,
+      data: (e) => {
+        assertEvent(e.event, "openModal");
+        return e.event.data;
+      },
+    }),
     closeModal: assign({ isOpen: false, data: undefined }),
   },
 }).createMachine({

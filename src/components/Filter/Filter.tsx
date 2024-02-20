@@ -28,7 +28,11 @@ export const Filter = () => {
       />
       <StyledFindButton
         variant="contained"
-        onClick={() => productsActor.send({ type: "Filter", id: value })}
+        onClick={() => {
+          if (value) {
+            productsActor.send({ type: "GetProductById", id: value });
+          }
+        }}
       >
         Find product
       </StyledFindButton>

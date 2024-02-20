@@ -1,53 +1,72 @@
 import { assign, fromPromise, setup } from "xstate";
-import { ProductsState, TApiResponse } from "../../types/types";
+import { ProductsState, TApiResponse, TEvents } from "../../types/types";
 import { fetchData } from "../../api/fetchData";
-import { assignId, assignPage } from "./actions";
+import { assignId, assignPage, clearState } from "./actions";
+
+export const initialContext = {
+  page: 1,
+  per_page: undefined,
+  total: undefined,
+  total_pages: undefined,
+  data: [],
+  support: undefined,
+  errorMessage: undefined,
+  id: undefined,
+};
+
+const getData = (data: TApiResponse): ProductsState => {
+  const productsData = Array.isArray(data.data) ? data.data : [data.data];
+  return { ...data, data: productsData };
+};
 
 export const productsMachine = setup({
   types: {
     context: {} as ProductsState,
-    events: {} as
-      | { type: "ChangePage"; page: number }
-      | { type: "Filter"; id?: number },
+    events: {} as TEvents,
   },
   actors: {
-    fetchData: fromPromise(async ({ input }) => {
+    fetchData: fromPromise<ProductsState, ProductsState>(async ({ input }) => {
       const data = await fetchData(input?.id, input?.page);
-      let results: TApiResponse;
-      if (Array.isArray(data.data)) {
-        results = data;
-      } else {
-        results = { ...data, data: [data.data] };
-      }
+      const results = getData(data);
       return results;
     }),
   },
   actions: {
-    assignId: assign({ id: (e) => assignId(e) }),
-    assignPage: assign({ page: (e) => assignPage(e) }),
+    clearState: assign(clearState),
+    getById: assign({ id: (e) => assignId(e) }),
+    getByPage: assign({ page: (e) => assignPage(e) }),
   },
 }).createMachine({
   id: "Products",
-  initial: "loadingProducts",
-  context: {
-    page: 1,
-    per_page: undefined,
-    total: undefined,
-    total_pages: undefined,
-    data: [],
-    support: undefined,
-    errorMessage: undefined,
-    id: undefined,
-  },
+  initial: "noProducts",
+  context: initialContext,
   states: {
+    noProducts: {
+      on: {
+        GetProducts: {
+          target: "loadingProducts",
+        },
+        GetProductsByPage: {
+          target: "loadingProducts",
+          actions: "getByPage",
+        },
+        GetProductById: {
+          target: "loadingProducts",
+          actions: "getById",
+        },
+      },
+    },
     loadingProducts: {
       invoke: {
         id: "loadProducts",
         src: "fetchData",
-        input: ({ context: { id, page } }) => ({ id, page }),
+        input: ({ context }) => ({ ...context }),
         onDone: {
           target: "fetchedProducts",
-          actions: assign(({ event }) => ({ ...event.output, id: undefined })),
+          actions: assign(({ event }) => ({
+            ...event.output,
+            id: undefined,
+          })),
         },
         onError: {
           target: "error",
@@ -59,25 +78,21 @@ export const productsMachine = setup({
     },
     fetchedProducts: {
       on: {
-        Filter: {
+        GetProductsByPage: {
           target: "loadingProducts",
-          actions: "assignId",
+          actions: "getByPage",
         },
-        ChangePage: {
+        GetProductById: {
           target: "loadingProducts",
-          actions: "assignPage",
+          actions: "getById",
         },
       },
     },
     error: {
       on: {
-        Filter: {
+        ClearData: {
           target: "loadingProducts",
-          actions: "assignId",
-        },
-        ChangePage: {
-          target: "loadingProducts",
-          actions: "assignPage",
+          actions: "clearState",
         },
       },
     },

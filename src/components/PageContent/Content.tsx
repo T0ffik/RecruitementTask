@@ -11,7 +11,8 @@ import { StyledBox, Text } from "./styles";
 export const Content = () => {
   const state = useSelector(productsActor, (state) => state.context);
   const handleRefresh = () => {
-    window.location.reload();
+    window.history.replaceState("refresh", "", `/`);
+    productsActor.send({ type: "ClearData" });
   };
   if (state.errorMessage) {
     return (
