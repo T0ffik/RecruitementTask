@@ -10,9 +10,14 @@ import { useSelector } from "@xstate/react";
 import { productsActor } from "../../xstate/products/productsActor";
 import { modalsActor } from "../../xstate/modals/modalsActor";
 import { StyledTable, StyledTableRow } from "./styles";
+import { TProduct } from "../../types/types";
 
 export const ProductsTable = () => {
   const products = useSelector(productsActor, (state) => state.context.data);
+  const handleClick = (product: TProduct) => {
+    modalsActor.send({ type: "openModal", data: product });
+  };
+
   if (products.length <= 0) {
     return null;
   }
@@ -30,9 +35,7 @@ export const ProductsTable = () => {
           {products.map((product) => {
             return (
               <StyledTableRow
-                onClick={() =>
-                  modalsActor.send({ type: "openModal", data: product })
-                }
+                onClick={() => handleClick(product)}
                 productcolor={product.color}
                 key={product.id}
               >

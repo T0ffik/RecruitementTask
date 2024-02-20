@@ -1,16 +1,22 @@
 import { Unstable_NumberInput as BaseNumberInput } from "@mui/base/Unstable_NumberInput";
-import { useState } from "react";
+import { ChangeEvent } from "react";
 import { productsActor } from "../../xstate/products/productsActor";
 import {
   FilterSection,
   StyledButton,
-  StyledFindButton,
   StyledInputElement,
   StyledInputRoot,
 } from "./styles";
 
 export const Filter = () => {
-  const [value, setValue] = useState<number>();
+  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (Number(event.target.value)) {
+      productsActor.send({
+        type: "GetProductById",
+        id: Number(event.target.value),
+      });
+    }
+  };
   return (
     <FilterSection>
       <BaseNumberInput
@@ -22,20 +28,9 @@ export const Filter = () => {
         }}
         placeholder="Type product id"
         defaultValue={null}
-        value={value}
-        onInputChange={(e) => setValue(Number(e.target.value))}
+        onInputChange={onChange}
         min={0}
       />
-      <StyledFindButton
-        variant="contained"
-        onClick={() => {
-          if (value) {
-            productsActor.send({ type: "GetProductById", id: value });
-          }
-        }}
-      >
-        Find product
-      </StyledFindButton>
     </FilterSection>
   );
 };
