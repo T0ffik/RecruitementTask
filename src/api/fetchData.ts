@@ -7,13 +7,13 @@ export const fetchData = async (
 ): Promise<TApiResponse> => {
   let params: string;
   if (page) {
-    params = `?page=${page}`;
+    params = `?page=${page}&`;
   }
   if (id) {
-    params = `/${id}`;
+    params = `?id=${id}&`;
   }
   return new Promise((resolve, reject) => {
-    fetch(`https://reqres.in/api/products${params}&per_page=${per_page}`).then(
+    fetch(`https://reqres.in/api/products${params}per_page=${per_page}`).then(
       (res) => {
         if (res.ok) {
           const response = res.json();
