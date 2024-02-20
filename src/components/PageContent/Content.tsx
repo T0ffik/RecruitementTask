@@ -7,13 +7,14 @@ import { Filter } from "../Filter";
 import { ProductsTable } from "../Table";
 import { CustomPagination } from "../Pagination";
 import { StyledBox, Text } from "./styles";
+import { useCallback } from "react";
 
 export const Content = () => {
   const state = useSelector(productsActor, (state) => state.context);
-  const handleRefresh = () => {
+  const handleRefresh = useCallback(() => {
     window.history.replaceState("refresh", "", `/`);
     productsActor.send({ type: "ClearData" });
-  };
+  }, []);
   if (state.errorMessage) {
     return (
       <Modal

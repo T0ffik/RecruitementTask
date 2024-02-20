@@ -2,10 +2,13 @@ import { Modal } from "@mui/material";
 import { useSelector } from "@xstate/react";
 import { modalsActor } from "../../xstate/modals/modalsActor";
 import { ModalContent, StyledBox, StyledCloseIcon } from "./styles";
+import { useCallback } from "react";
 
 export const BasicModal = () => {
   const state = useSelector(modalsActor, (state) => state.context);
-  const handleClose = () => modalsActor.send({ type: "closeModal" });
+  const handleClose = useCallback(() => {
+    modalsActor.send({ type: "closeModal" });
+  }, []);
 
   return (
     <Modal
