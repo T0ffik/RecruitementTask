@@ -39,8 +39,6 @@ export type ModalsState = {
 };
 
 export type TEvents =
-  | { type: "Filter"; id: number }
-  | { type: "ChangePage"; page: number }
   | { type: "GetProducts" }
   | { type: "GetProductById"; id: number }
   | { type: "GetProductsByPage"; page: number }
