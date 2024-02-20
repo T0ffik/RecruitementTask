@@ -1,4 +1,9 @@
-export const fetchData = async (id?: number, page?: number) => {
+import { TApiResponse } from "../types/types";
+
+export const fetchData = async (
+  id?: number,
+  page?: number
+): Promise<TApiResponse> => {
   let params: string;
   if (page) {
     params = `?page=${page}`;
@@ -13,7 +18,7 @@ export const fetchData = async (id?: number, page?: number) => {
         response = res.json();
         resolve(response);
       }
-      reject(`something Went wrong with error:${res.status}`);
+      reject(`Something went wrong with error:${res.status}`);
     });
   });
 };
