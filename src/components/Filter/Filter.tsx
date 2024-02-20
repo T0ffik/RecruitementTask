@@ -13,8 +13,9 @@ import { idRoute } from "../../utils/consts";
 export const Filter = () => {
   const navigate = useNavigate();
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (Number(event.target.value)) {
-      navigate(`${idRoute}${event.target.value}`);
+    const value = Number(event.target.value);
+    if (value) {
+      navigate(`${idRoute}${value}`);
     }
   };
   const debouncedOnChange = debounce(onChange, 500);

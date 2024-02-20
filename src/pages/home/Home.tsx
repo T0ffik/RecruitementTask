@@ -1,7 +1,7 @@
 import { Content } from "../../components/PageContent";
 import { useEffect } from "react";
 import { setParamsToFetch } from "../../utils/setParamsToFetch";
-import { AppWrapper } from "./styles";
+import { HomeWrapper } from "./styles";
 import { useLocation } from "react-router-dom";
 
 export const Home = () => {
@@ -10,8 +10,8 @@ export const Home = () => {
     setParamsToFetch();
   }, [location]);
   return (
-    <AppWrapper>
+    <HomeWrapper>
       <Content />
-    </AppWrapper>
+    </HomeWrapper>
   );
 };

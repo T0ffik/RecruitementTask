@@ -1,22 +1,17 @@
 import { AssignArgs, assertEvent } from "xstate";
-import { ProductsState, TActor, TEvents } from "../../types/types";
-import {
-  idParamName,
-  pageParamName,
-  pageNumberQueryParameterKey,
-} from "../../utils/consts";
+import { ProductsState, TActor, TEventsProducts } from "../../types/types";
+import { idParamName, pageParamName } from "../../utils/consts";
 import { initialContext } from "./productsMachine";
 
 export const clearState = (
-  action: AssignArgs<ProductsState, TEvents, TEvents, TActor>
+  action: AssignArgs<ProductsState, TEventsProducts, TEventsProducts, TActor>
 ): ProductsState => {
   assertEvent(action.event, "ClearData");
-  localStorage.removeItem(pageNumberQueryParameterKey);
   return initialContext;
 };
 
 export const assignId = (
-  action: AssignArgs<ProductsState, TEvents, TEvents, TActor>
+  action: AssignArgs<ProductsState, TEventsProducts, TEventsProducts, TActor>
 ) => {
   assertEvent(action.event, "GetProductById");
   window.history.replaceState(
@@ -27,7 +22,7 @@ export const assignId = (
   return action.event.id;
 };
 export const assignPage = (
-  action: AssignArgs<ProductsState, TEvents, TEvents, TActor>
+  action: AssignArgs<ProductsState, TEventsProducts, TEventsProducts, TActor>
 ) => {
   assertEvent(action.event, "GetProductsByPage");
   window.history.replaceState(
