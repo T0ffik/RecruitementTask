@@ -1,5 +1,5 @@
 import { assign, fromPromise, setup } from "xstate";
-import { ProductsState, TApiResponse } from "../../utils/types";
+import { ProductsState, TApiResponse } from "../../types/types";
 import { fetchData } from "../../api/fetchData";
 import { assignId, assignPage } from "./actions";
 

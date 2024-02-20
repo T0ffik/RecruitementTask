@@ -1,5 +1,5 @@
 import { assign, setup } from "xstate";
-import { ModalsState, TProduct } from "../../utils/types";
+import { ModalsState, TProduct } from "../../types/types";
 
 export const modalsMachine = setup({
   types: {
