@@ -1,8 +1,8 @@
 import { createActor } from "xstate";
 import { productsMachine } from "./productsMachine";
-import { storageProductsState } from "../../utils/consts";
+import { pageNumberQueryParameterKey } from "../../utils/consts";
 
-const stateString = localStorage.getItem(storageProductsState);
+const stateString = localStorage.getItem(pageNumberQueryParameterKey);
 const restoredState = stateString ? JSON.parse(stateString) : undefined;
 
 export const productsActor = createActor(productsMachine, {
@@ -11,7 +11,10 @@ export const productsActor = createActor(productsMachine, {
 
 productsActor.subscribe(() => {
   const persistedState = productsActor.getPersistedSnapshot();
-  localStorage.setItem(storageProductsState, JSON.stringify(persistedState));
+  localStorage.setItem(
+    pageNumberQueryParameterKey,
+    JSON.stringify(persistedState)
+  );
 });
 
 productsActor.start();

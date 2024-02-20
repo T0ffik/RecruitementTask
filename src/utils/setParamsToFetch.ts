@@ -1,13 +1,17 @@
 import { productsActor } from "../xstate/products/productsActor";
-import { id, page } from "./consts";
+import { idParamName, pageParamName } from "./consts";
 
-export const fetchFromParams = () => {
+export const setParamsToFetch = () => {
   const param = window.location.search.split("=");
-  if (param[0].includes(page)) {
+  if (param[0].includes(pageParamName)) {
     productsActor.send({ type: "GetProductsByPage", page: Number(param[1]) });
-  } else if (param[0].includes(id)) {
-    productsActor.send({ type: "GetProductById", id: Number(param[1]) });
-  } else {
-    productsActor.send({ type: "GetProducts" });
+    return;
   }
+  if (param[0].includes(idParamName)) {
+    productsActor.send({ type: "GetProductById", id: Number(param[1]) });
+    return;
+  }
+  productsActor.send({ type: "GetProducts" });
+
+  return;
 };
