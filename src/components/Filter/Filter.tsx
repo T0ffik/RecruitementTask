@@ -1,6 +1,5 @@
 import { Unstable_NumberInput as BaseNumberInput } from "@mui/base/Unstable_NumberInput";
 import { ChangeEvent } from "react";
-import { productsActor } from "../../xstate/products/productsActor";
 import {
   FilterSection,
   StyledButton,
@@ -8,14 +7,14 @@ import {
   StyledInputRoot,
 } from "./styles";
 import debounce from "@mui/utils/debounce";
+import { useNavigate } from "react-router-dom";
+import { idRoute } from "../../utils/consts";
 
 export const Filter = () => {
+  const navigate = useNavigate();
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (Number(event.target.value)) {
-      productsActor.send({
-        type: "GetProductById",
-        id: Number(event.target.value),
-      });
+      navigate(`${idRoute}${event.target.value}`);
     }
   };
   const debouncedOnChange = debounce(onChange, 500);
