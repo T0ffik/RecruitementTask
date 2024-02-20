@@ -22,11 +22,12 @@ const boxStyle = {
 };
 
 export const Content = () => {
-  const state = useSelector(productsActor, (state) => state.context);
+  const state = useSelector(productsActor, (state) => state);
   const handleRefresh = () => {
-    window.location.reload();
+    window.history.replaceState("refresh", "", `/`);
+    productsActor.send({ type: "ClearData" });
   };
-  if (state.errorMessage) {
+  if (state.context.errorMessage) {
     return (
       <Modal
         open
@@ -34,7 +35,7 @@ export const Content = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={boxStyle}>
-          <span style={{ color: "black" }}>{state.errorMessage}</span>
+          <span style={{ color: "black" }}>{state.context.errorMessage}</span>
           <span style={{ color: "black" }}>
             Please refresh page and try again
           </span>
