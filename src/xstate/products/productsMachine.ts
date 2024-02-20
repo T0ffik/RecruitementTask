@@ -1,6 +1,7 @@
 import { assign, fromPromise, setup } from "xstate";
 import { ProductsState, TApiResponse } from "../../utils/types";
 import { fetchData } from "../../api/fetchData";
+import { assignId, assignPage } from "./actions";
 
 export const productsMachine = setup({
   types: {
@@ -22,8 +23,8 @@ export const productsMachine = setup({
     }),
   },
   actions: {
-    assignId: assign({ id: (e) => e.event.id }),
-    assignPage: assign({ page: (e) => e.event.page }),
+    assignId: assign({ id: (e) => assignId(e) }),
+    assignPage: assign({ page: (e) => assignPage(e) }),
   },
 }).createMachine({
   id: "Products",
