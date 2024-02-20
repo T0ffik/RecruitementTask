@@ -3,13 +3,13 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Table,
   TableBody,
   Paper,
 } from "@mui/material";
 import { useSelector } from "@xstate/react";
 import { productsActor } from "../../xstate/products/productsActor";
 import { modalsActor } from "../../xstate/modals/modalsActor";
+import { StyledTable, StyledTableRow } from "./styles";
 
 export const ProductsTable = () => {
   const products = useSelector(productsActor, (state) => state.context.data);
@@ -18,7 +18,7 @@ export const ProductsTable = () => {
   }
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+      <StyledTable size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
             <TableCell>Id</TableCell>
@@ -29,27 +29,23 @@ export const ProductsTable = () => {
         <TableBody>
           {products.map((product) => {
             return (
-              <TableRow
+              <StyledTableRow
                 onClick={() =>
                   modalsActor.send({ type: "openModal", data: product })
                 }
+                productcolor={product.color}
                 key={product.id}
-                sx={{
-                  "&:last-child td, &:last-child th": { border: 0 },
-                  backgroundColor: product.color,
-                  cursor: "pointer",
-                }}
               >
                 <TableCell component="th" scope="row">
                   {product.id}
                 </TableCell>
                 <TableCell>{product.name}</TableCell>
                 <TableCell>{product.year}</TableCell>
-              </TableRow>
+              </StyledTableRow>
             );
           })}
         </TableBody>
-      </Table>
+      </StyledTable>
     </TableContainer>
   );
 };

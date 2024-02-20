@@ -1,6 +1,7 @@
-import { Pagination, PaginationItem } from "@mui/material";
+import { Pagination } from "@mui/material";
 import { useSelector } from "@xstate/react";
 import { productsActor } from "../../xstate/products/productsActor";
+import { StyledPaginationItem } from "./styles";
 
 export const CustomPagination = () => {
   const state = useSelector(productsActor, (state) => state.context);
@@ -9,12 +10,10 @@ export const CustomPagination = () => {
       page={state.page}
       count={state.total_pages}
       color="primary"
-      onChange={(e, value) =>
+      onChange={(_e, value) =>
         productsActor.send({ type: "ChangePage", page: value })
       }
-      renderItem={(item) => (
-        <PaginationItem {...item} sx={{ color: "white" }} />
-      )}
+      renderItem={(item) => <StyledPaginationItem {...item} />}
     />
   );
 };
