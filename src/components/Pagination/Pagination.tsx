@@ -9,7 +9,7 @@ export const CustomPagination = () => {
       page={state.page}
       count={state.total_pages}
       color="primary"
-      onChange={(e, value) =>
+      onChange={(_e, value) =>
         productsActor.send({ type: "GetProductsByPage", page: value })
       }
       renderItem={(item) => (
