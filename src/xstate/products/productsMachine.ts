@@ -1,9 +1,9 @@
 import { assign, fromPromise, setup } from "xstate";
 import { ProductsState, TApiResponse, TEvents } from "../../types/types";
 import { fetchData } from "../../api/fetchData";
-import { assignId, assignPage } from "./actions";
+import { assignId, assignPage, clearState } from "./actions";
 
-const initialContex = {
+export const initialContext = {
   page: 1,
   per_page: undefined,
   total: undefined,
@@ -32,15 +32,43 @@ export const productsMachine = setup({
     }),
   },
   actions: {
+    clearState: assign(clearState),
     assignId: assign({ id: (e) => assignId(e) }),
     assignPage: assign({ page: (e) => assignPage(e) }),
+    getById: assign({ id: (e) => e.event.id }),
+    getByPage: assign({ page: (e) => e.event.page }),
   },
 }).createMachine({
   id: "Products",
-  initial: "loadingProducts",
-  context: initialContex,
+  initial: "noProducts",
+  context: initialContext,
   states: {
+    noProducts: {
+      on: {
+        GetProducts: {
+          target: "loadingProducts",
+        },
+        GetProductsByPage: {
+          target: "loadingProducts",
+          actions: "getByPage",
+        },
+        GetProductById: {
+          target: "loadingProducts",
+          actions: "getById",
+        },
+      },
+    },
     loadingProducts: {
+      on: {
+        GetProductsByPage: {
+          target: "loadingProducts",
+          actions: "getByPage",
+        },
+        GetProductById: {
+          target: "loadingProducts",
+          actions: "getById",
+        },
+      },
       invoke: {
         id: "loadProducts",
         src: "fetchData",
@@ -74,13 +102,9 @@ export const productsMachine = setup({
     },
     error: {
       on: {
-        Filter: {
+        ClearData: {
           target: "loadingProducts",
-          actions: "assignId",
-        },
-        ChangePage: {
-          target: "loadingProducts",
-          actions: "assignPage",
+          actions: "clearState",
         },
       },
     },
