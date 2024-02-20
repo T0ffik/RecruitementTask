@@ -7,6 +7,7 @@ import {
   StyledInputElement,
   StyledInputRoot,
 } from "./styles";
+import debounce from "@mui/utils/debounce";
 
 export const Filter = () => {
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -17,6 +18,7 @@ export const Filter = () => {
       });
     }
   };
+  const debouncedOnChange = debounce(onChange, 500);
   return (
     <FilterSection>
       <BaseNumberInput
@@ -28,7 +30,7 @@ export const Filter = () => {
         }}
         placeholder="Type product id"
         defaultValue={null}
-        onInputChange={onChange}
+        onInputChange={debouncedOnChange}
         min={0}
       />
     </FilterSection>

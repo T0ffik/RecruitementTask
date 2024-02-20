@@ -1,4 +1,5 @@
 import { TApiResponse } from "../types/types";
+import { per_page } from "../utils/consts";
 
 export const fetchData = async (
   id?: number,
@@ -12,12 +13,14 @@ export const fetchData = async (
     params = `/${id}`;
   }
   return new Promise((resolve, reject) => {
-    fetch(`https://reqres.in/api/products${params}`).then((res) => {
-      if (res.ok) {
-        const response = res.json();
-        resolve(response);
+    fetch(`https://reqres.in/api/products${params}&per_page=${per_page}`).then(
+      (res) => {
+        if (res.ok) {
+          const response = res.json();
+          resolve(response);
+        }
+        reject(`Something went wrong with error:${res.status}`);
       }
-      reject(`Something went wrong with error:${res.status}`);
-    });
+    );
   });
 };
