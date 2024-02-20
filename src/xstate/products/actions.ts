@@ -1,31 +1,34 @@
 import { AssignArgs, assertEvent } from "xstate";
-import { ProductsState, TActor, TEvents } from "../../types/types";
-import { id, page, storageProductsState } from "../../utils/consts";
+import { ProductsState, TActor, TEventsProducts } from "@customTypes/types";
+import { idParamName, pageParamName } from "@utils/consts";
 import { initialContext } from "./productsMachine";
 
 export const clearState = (
-  action: AssignArgs<ProductsState, TEvents, TEvents, TActor>
+  action: AssignArgs<ProductsState, TEventsProducts, TEventsProducts, TActor>
 ): ProductsState => {
   assertEvent(action.event, "ClearData");
-  localStorage.removeItem(storageProductsState);
   return initialContext;
 };
 
 export const assignId = (
-  action: AssignArgs<ProductsState, TEvents, TEvents, TActor>
+  action: AssignArgs<ProductsState, TEventsProducts, TEventsProducts, TActor>
 ) => {
   assertEvent(action.event, "GetProductById");
-  window.history.replaceState("filter", "", `?${id}=${action.event.id}`);
+  window.history.replaceState(
+    "filter",
+    "",
+    `?${idParamName}=${action.event.id}`
+  );
   return action.event.id;
 };
 export const assignPage = (
-  action: AssignArgs<ProductsState, TEvents, TEvents, TActor>
+  action: AssignArgs<ProductsState, TEventsProducts, TEventsProducts, TActor>
 ) => {
   assertEvent(action.event, "GetProductsByPage");
   window.history.replaceState(
     "pagination",
     "",
-    `?${page}=${action.event.page}`
+    `?${pageParamName}=${action.event.page}`
   );
   return action.event.page;
 };

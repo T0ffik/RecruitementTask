@@ -1,5 +1,5 @@
 import { useSelector } from "@xstate/react";
-import { productsActor } from "../../xstate/products/productsActor";
+import { productsActor } from "@customXstate/products/productsActor";
 import { Modal } from "@mui/material";
 import { Button } from "@mui/base";
 import { BasicModal } from "../Modal";

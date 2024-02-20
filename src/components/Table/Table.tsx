@@ -8,8 +8,8 @@ import {
   Paper,
 } from "@mui/material";
 import { useSelector } from "@xstate/react";
-import { productsActor } from "../../xstate/products/productsActor";
-import { modalsActor } from "../../xstate/modals/modalsActor";
+import { productsActor } from "@customXstate/products/productsActor";
+import { modalsActor } from "@customXstate/modals/modalsActor";
 
 export const ProductsTable = () => {
   const products = useSelector(productsActor, (state) => state.context.data);

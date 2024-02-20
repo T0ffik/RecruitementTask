@@ -1,6 +1,10 @@
 import { assign, fromPromise, setup } from "xstate";
-import { ProductsState, TApiResponse, TEvents } from "../../types/types";
-import { fetchData } from "../../api/fetchData";
+import {
+  ProductsState,
+  TApiResponse,
+  TEventsProducts,
+} from "@customTypes/types";
+import { fetchData } from "@api/fetchData";
 import { assignId, assignPage, clearState } from "./actions";
 
 export const initialContext = {
@@ -22,7 +26,7 @@ const getData = (data: TApiResponse): ProductsState => {
 export const productsMachine = setup({
   types: {
     context: {} as ProductsState,
-    events: {} as TEvents,
+    events: {} as TEventsProducts,
   },
   actors: {
     fetchData: fromPromise<ProductsState, ProductsState>(async ({ input }) => {

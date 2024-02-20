@@ -38,11 +38,15 @@ export type ModalsState = {
   data?: TProduct;
 };
 
-export type TEvents =
+export type TEventsProducts =
   | { type: "GetProducts" }
   | { type: "GetProductById"; id: number }
   | { type: "GetProductsByPage"; page: number }
   | { type: "ClearData" };
+
+export type TEventsModals =
+  | { type: "openModal"; data: TProduct }
+  | { type: "closeModal" };
 
 export type TActor = {
   src: "fetchData";

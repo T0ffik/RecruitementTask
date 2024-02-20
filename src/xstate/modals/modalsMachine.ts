@@ -1,12 +1,10 @@
 import { assertEvent, assign, setup } from "xstate";
-import { ModalsState, TProduct } from "../../types/types";
+import { ModalsState, TEventsModals } from "@customTypes/types";
 
 export const modalsMachine = setup({
   types: {
     context: {} as ModalsState,
-    events: {} as
-      | { type: "openModal"; data: TProduct }
-      | { type: "closeModal" },
+    events: {} as TEventsModals,
   },
   actions: {
     openModal: assign({
