@@ -14,14 +14,14 @@ export const clearState = (
 export const assignId = (
   action: AssignArgs<ProductsState, TEvents, TEvents, TActor>
 ) => {
-  assertEvent(action.event, "Filter");
+  assertEvent(action.event, "GetProductById");
   window.history.replaceState("filter", "", `?${id}=${action.event.id}`);
   return action.event.id;
 };
 export const assignPage = (
   action: AssignArgs<ProductsState, TEvents, TEvents, TActor>
 ) => {
-  assertEvent(action.event, "ChangePage");
+  assertEvent(action.event, "GetProductsByPage");
   window.history.replaceState(
     "pagination",
     "",

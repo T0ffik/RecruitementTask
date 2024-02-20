@@ -33,10 +33,8 @@ export const productsMachine = setup({
   },
   actions: {
     clearState: assign(clearState),
-    assignId: assign({ id: (e) => assignId(e) }),
-    assignPage: assign({ page: (e) => assignPage(e) }),
-    getById: assign({ id: (e) => e.event.id }),
-    getByPage: assign({ page: (e) => e.event.page }),
+    getById: assign({ id: (e) => assignId(e) }),
+    getByPage: assign({ page: (e) => assignPage(e) }),
   },
 }).createMachine({
   id: "Products",
@@ -59,16 +57,6 @@ export const productsMachine = setup({
       },
     },
     loadingProducts: {
-      on: {
-        GetProductsByPage: {
-          target: "loadingProducts",
-          actions: "getByPage",
-        },
-        GetProductById: {
-          target: "loadingProducts",
-          actions: "getById",
-        },
-      },
       invoke: {
         id: "loadProducts",
         src: "fetchData",
@@ -90,13 +78,13 @@ export const productsMachine = setup({
     },
     fetchedProducts: {
       on: {
-        Filter: {
+        GetProductsByPage: {
           target: "loadingProducts",
-          actions: "assignId",
+          actions: "getByPage",
         },
-        ChangePage: {
+        GetProductById: {
           target: "loadingProducts",
-          actions: "assignPage",
+          actions: "getById",
         },
       },
     },
