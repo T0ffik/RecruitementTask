@@ -8,7 +8,7 @@ import {
 } from "./styles";
 import debounce from "@mui/utils/debounce";
 import { useNavigate } from "react-router-dom";
-import { idRoute } from "../../utils/consts";
+import { idRoute } from "@utils/consts";
 
 export const Filter = () => {
   const navigate = useNavigate();

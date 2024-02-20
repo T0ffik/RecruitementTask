@@ -1,9 +1,9 @@
 import { useSelector } from "@xstate/react";
-import { productsActor } from "../../xstate/products/productsActor";
+import { productsActor } from "@customXstate/products/productsActor";
 import { StyledPagination, StyledPaginationItem } from "./styles";
 import { ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { pageRoute } from "../../utils/consts";
+import { pageRoute } from "@utils/consts";
 
 export const CustomPagination = () => {
   const state = useSelector(productsActor, (state) => state.context);

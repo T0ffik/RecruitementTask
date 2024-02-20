@@ -1,4 +1,4 @@
-import { productsActor } from "../xstate/products/productsActor";
+import { productsActor } from "@customXstate/products/productsActor";
 import { idParamName, pageParamName } from "./consts";
 
 export const setParamsToFetch = () => {

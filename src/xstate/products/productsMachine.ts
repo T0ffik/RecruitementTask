@@ -3,8 +3,8 @@ import {
   ProductsState,
   TApiResponse,
   TEventsProducts,
-} from "../../types/types";
-import { fetchData } from "../../api/fetchData";
+} from "@customTypes/types";
+import { fetchData } from "@api/fetchData";
 import { assignId, assignPage, clearState } from "./actions";
 
 export const initialContext = {

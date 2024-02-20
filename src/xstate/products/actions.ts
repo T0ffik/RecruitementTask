@@ -1,6 +1,6 @@
 import { AssignArgs, assertEvent } from "xstate";
-import { ProductsState, TActor, TEventsProducts } from "../../types/types";
-import { idParamName, pageParamName } from "../../utils/consts";
+import { ProductsState, TActor, TEventsProducts } from "@customTypes/types";
+import { idParamName, pageParamName } from "@utils/consts";
 import { initialContext } from "./productsMachine";
 
 export const clearState = (

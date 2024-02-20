@@ -1,5 +1,5 @@
 import { assertEvent, assign, setup } from "xstate";
-import { ModalsState, TEventsModals } from "../../types/types";
+import { ModalsState, TEventsModals } from "@customTypes/types";
 
 export const modalsMachine = setup({
   types: {

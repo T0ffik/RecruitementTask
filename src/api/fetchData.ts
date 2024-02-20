@@ -1,5 +1,5 @@
-import { TApiResponse } from "../types/types";
-import { per_page } from "../utils/consts";
+import { TApiResponse } from "@customTypes/types";
+import { per_page } from "@utils/consts";
 
 export const fetchData = async (
   id?: number,
