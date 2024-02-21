@@ -2,7 +2,7 @@
 
 ## How to run app
 
-- You have to install Nodeal least 20.11.1 ver
+- You have to install yarn and Node at least 20.11.1 ver
 - Clone This repository
 - Run yarn install
 - Run yarn start
